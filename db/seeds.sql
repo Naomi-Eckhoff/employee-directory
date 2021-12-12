@@ -6,11 +6,11 @@ VALUES
   ('Department3');
 
 INSERT INTO role
-  (title, salary, department)
+  (title, salary, department_id)
 VALUES
-  ('T1', 'S1', 1),
-  ('T2', 'S2', 2),
-  ('T3', 'S3', 3);
+  ('T1', 100, 1),
+  ('T2', 200, 2),
+  ('T3', 300, 3);
 
 INSERT INTO employee
   (first_name, last_name, role_id, manager_id)
