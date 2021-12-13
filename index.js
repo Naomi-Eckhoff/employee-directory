@@ -41,9 +41,6 @@ function initialPrompt() {
         case 'update an employee role':
           updateEmployee();
           break;
-        case 'reset database':
-          resetDatabase();
-          break;
       }
     })
 }
@@ -87,7 +84,7 @@ function addDepartment() {
   const params = inquirer.prompt(
     {
       type: 'input',
-      message: 'What would you like to do?',
+      message: "What is the department's name?",
       name: 'name'
     }
   );
@@ -105,9 +102,19 @@ function addRole() {
   const params = inquirer.prompt(
     {
       type: 'input',
-      message: 'What would you like to do?',
-      name: 'name'
-    }
+      message: "What is the role's title?",
+      name: 'title'
+    },
+    {
+      type: 'input',
+      message: "What is the role's salary?",
+      name: 'salary'
+    },
+    {
+      type: 'input',
+      message: "What is the role's department_id?",
+      name: 'department'
+    },
   );
 
   db.query(sql, params, (err, rows) => {
@@ -123,9 +130,24 @@ function addEmployee() {
   const params = inquirer.prompt(
     {
       type: 'input',
-      message: 'What would you like to do?',
-      name: 'name'
-    }
+      message: "What is the employee's first name?",
+      name: 'firstName'
+    },
+    {
+      type: 'input',
+      message: "What is the employee's last name?",
+      name: 'lastName'
+    },
+    {
+      type: 'input',
+      message: "What is the employee's role id?",
+      name: 'role'
+    },
+    {
+      type: 'input',
+      message: "What is the employee's manager id?",
+      name: 'manager'
+    },
   );
 
   db.query(sql, params, (err, rows) => {
@@ -137,12 +159,17 @@ function addEmployee() {
 }
 
 function updateEmployee() {
-  const sql = `UPDATE employee SET ? = ? WHERE id = ?`;
+  const sql = `UPDATE employee SET role_id = ? WHERE id = ?`;
   const params = inquirer.prompt(
     {
       type: 'input',
-      message: 'What would you like to do?',
-      name: 'name'
+      message: 'What is the new role id?',
+      name: 'role'
+    },
+    {
+      type: 'input',
+      message: 'Which employee should be altered?',
+      name: 'employee'
     }
   );
 
