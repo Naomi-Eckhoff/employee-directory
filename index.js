@@ -84,7 +84,13 @@ function viewEmployees() {
 
 function addDepartment() {
   const sql = `INSERT INTO department (name) VALUES (?)`;
-  const params = [];
+  const params = inquirer.prompt(
+    {
+      type: 'input',
+      message: 'What would you like to do?',
+      name: 'name'
+    }
+  );
 
   db.query(sql, params, (err, rows) => {
     if (err) {
@@ -96,7 +102,13 @@ function addDepartment() {
 
 function addRole() {
   const sql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
-  const params = [];
+  const params = inquirer.prompt(
+    {
+      type: 'input',
+      message: 'What would you like to do?',
+      name: 'name'
+    }
+  );
 
   db.query(sql, params, (err, rows) => {
     if (err) {
@@ -108,7 +120,13 @@ function addRole() {
 
 function addEmployee() {
   const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
-  const params = [];
+  const params = inquirer.prompt(
+    {
+      type: 'input',
+      message: 'What would you like to do?',
+      name: 'name'
+    }
+  );
 
   db.query(sql, params, (err, rows) => {
     if (err) {
@@ -120,7 +138,13 @@ function addEmployee() {
 
 function updateEmployee() {
   const sql = `UPDATE employee SET ? = ? WHERE id = ?`;
-  const params = [];
+  const params = inquirer.prompt(
+    {
+      type: 'input',
+      message: 'What would you like to do?',
+      name: 'name'
+    }
+  );
 
   db.query(sql, params, (err, rows) => {
     if (err) {
