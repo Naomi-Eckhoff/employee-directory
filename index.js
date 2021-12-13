@@ -82,6 +82,8 @@ function viewEmployees() {
 
 function addDepartment() {
   const sql = `INSERT INTO department (name) VALUES (?)`;
+  const params = [];
+
   db.query(sql, (err, rows) => {
     if (err) {
       console.log('err');
@@ -92,6 +94,8 @@ function addDepartment() {
 
 function addRole() {
   const sql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
+  const params = [];
+
   db.query(sql, (err, rows) => {
     if (err) {
       console.log('err');
@@ -102,6 +106,8 @@ function addRole() {
 
 function addEmployee() {
   const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
+  const params = [];
+
   db.query(sql, (err, rows) => {
     if (err) {
       console.log('err');
@@ -112,6 +118,8 @@ function addEmployee() {
 
 function updateEmployee() {
   const sql = `UPDATE employee SET ? = ? WHERE id = ?`;
+  const params = [];
+
   db.query(sql, (err, rows) => {
     if (err) {
       console.log('err');
