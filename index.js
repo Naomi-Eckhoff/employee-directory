@@ -56,8 +56,6 @@ function viewDepartments() {
     }
     console.table(rows);
   });
-  console.log('_');
-  initialPrompt();
 }
 
 function viewRoles() {
@@ -68,20 +66,18 @@ function viewRoles() {
     }
     console.table(rows);
   });
-  console.log('_');
-  initialPrompt();
 }
 
 function viewEmployees() {
-  const sql = `SELECT * FROM employee`;
+  const sql = `SELECT * 
+  FROM employee
+  LEFT JOIN role On employee.role_id = role.id`;
   db.query(sql, (err, rows) => {
     if (err) {
       console.log('err');
     }
     console.table(rows);
   });
-  console.log('_');
-  initialPrompt();
 }
 
 function addDepartment() {
@@ -92,8 +88,6 @@ function addDepartment() {
     }
     console.table(rows);
   });
-  console.log('_');
-  initialPrompt();
 }
 
 function addRole() {
@@ -104,8 +98,6 @@ function addRole() {
     }
     console.table(rows);
   });
-  console.log('_');
-  initialPrompt();
 }
 
 function addEmployee() {
@@ -116,8 +108,6 @@ function addEmployee() {
     }
     console.table(rows);
   });
-  console.log('_');
-  initialPrompt();
 }
 
 function updateEmployee() {
@@ -128,8 +118,6 @@ function updateEmployee() {
     }
     console.table(rows);
   });
-  console.log('_');
-  initialPrompt();
 }
 
 initialPrompt();
