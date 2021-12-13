@@ -2,91 +2,134 @@ const inquirer = require('inquirer');
 const db = require('./db/connection');
 const cTable = require('console.table');
 
-class employeeDirectory {
-
-  initialPrompt() {
-    inquirer
-      .prompt({
-        type: 'list',
-        message: 'What would you like to do?',
-        name: 'choice',
-        choices: [
-          'view all departments',
-          'view all roles',
-          'view all employees',
-          'add a department',
-          'add a role',
-          'add an employee',
-          'update an employee role',
-          'reset database'
-        ]
-      })
-      .then(({ choice }) => {
-        switch (choice) {
-          case 'view all departments':
-            this.viewDepartments();
-            break;
-          case 'view all roles':
-            this.viewRoles();
-            break;
-          case 'view all employees':
-            this.viewEmployees();
-            break;
-          case 'add a department':
-            this.addDepartment();
-            break;
-          case 'add a role':
-            this.addRole();
-            break;
-          case 'add an employee':
-            this.addEmployee();
-            break;
-          case 'update an employee role':
-            this.updateEmployee();
-            break;
-          case 'reset database':
-            this.resetDatabase();
-            break;
-        }
-      })
-  }
-
-  viewDepartments() {
-    const sql = `SELECT * FROM department`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        console.log('test');
-      }
-      cTable(rows);
+function initialPrompt() {
+  inquirer
+    .prompt({
+      type: 'list',
+      message: 'What would you like to do?',
+      name: 'choice',
+      choices: [
+        'view all departments',
+        'view all roles',
+        'view all employees',
+        'add a department',
+        'add a role',
+        'add an employee',
+        'update an employee role'
+      ]
     })
-  }
-
-  viewRoles() {
-
-  }
-
-  viewEmployees() {
-
-  }
-
-  addDepartment() {
-
-  }
-
-  addRole() {
-
-  }
-
-  addEmployee() {
-
-  }
-
-  updateEmployee() {
-
-  }
-
-  resetDatabase() {
-
-  }
+    .then(({ choice }) => {
+      switch (choice) {
+        case 'view all departments':
+          viewDepartments();
+          break;
+        case 'view all roles':
+          viewRoles();
+          break;
+        case 'view all employees':
+          viewEmployees();
+          break;
+        case 'add a department':
+          addDepartment();
+          break;
+        case 'add a role':
+          addRole();
+          break;
+        case 'add an employee':
+          addEmployee();
+          break;
+        case 'update an employee role':
+          updateEmployee();
+          break;
+        case 'reset database':
+          resetDatabase();
+          break;
+      }
+    })
 }
 
+function viewDepartments() {
+  const sql = `SELECT * FROM department`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log('err');
+    }
+    console.table(rows);
+  });
+  console.log('_');
+  initialPrompt();
+}
+
+function viewRoles() {
+  const sql = `SELECT * FROM role`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log('err');
+    }
+    console.table(rows);
+  });
+  console.log('_');
+  initialPrompt();
+}
+
+function viewEmployees() {
+  const sql = `SELECT * FROM employee`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log('err');
+    }
+    console.table(rows);
+  });
+  console.log('_');
+  initialPrompt();
+}
+
+function addDepartment() {
+  const sql = `INSERT INTO department (name) VALUES (?)`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log('err');
+    }
+    console.table(rows);
+  });
+  console.log('_');
+  initialPrompt();
+}
+
+function addRole() {
+  const sql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log('err');
+    }
+    console.table(rows);
+  });
+  console.log('_');
+  initialPrompt();
+}
+
+function addEmployee() {
+  const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log('err');
+    }
+    console.table(rows);
+  });
+  console.log('_');
+  initialPrompt();
+}
+
+function updateEmployee() {
+  const sql = `UPDATE employee SET ? = ? WHERE id = ?`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log('err');
+    }
+    console.table(rows);
+  });
+  console.log('_');
+  initialPrompt();
+}
+
+initialPrompt();
