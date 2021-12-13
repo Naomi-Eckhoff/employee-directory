@@ -59,7 +59,9 @@ function viewDepartments() {
 }
 
 function viewRoles() {
-  const sql = `SELECT * FROM role`;
+  const sql = `SELECT *
+  FROM role
+  LEFT JOIN department On role.department_id = department.id`;
   db.query(sql, (err, rows) => {
     if (err) {
       console.log('err');
@@ -84,7 +86,7 @@ function addDepartment() {
   const sql = `INSERT INTO department (name) VALUES (?)`;
   const params = [];
 
-  db.query(sql, (err, rows) => {
+  db.query(sql, params, (err, rows) => {
     if (err) {
       console.log('err');
     }
@@ -96,7 +98,7 @@ function addRole() {
   const sql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
   const params = [];
 
-  db.query(sql, (err, rows) => {
+  db.query(sql, params, (err, rows) => {
     if (err) {
       console.log('err');
     }
@@ -108,7 +110,7 @@ function addEmployee() {
   const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
   const params = [];
 
-  db.query(sql, (err, rows) => {
+  db.query(sql, params, (err, rows) => {
     if (err) {
       console.log('err');
     }
@@ -120,7 +122,7 @@ function updateEmployee() {
   const sql = `UPDATE employee SET ? = ? WHERE id = ?`;
   const params = [];
 
-  db.query(sql, (err, rows) => {
+  db.query(sql, params, (err, rows) => {
     if (err) {
       console.log('err');
     }
