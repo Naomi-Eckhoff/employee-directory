@@ -2,6 +2,15 @@ const inquirer = require('inquirer');
 const db = require('./db/connection');
 const cTable = require('console.table');
 
+function query(sql, params) {
+  db.query(sql, params, (err, rows) => {
+    if (err) {
+      console.log(err);
+    }
+    console.table(rows);
+  });
+}
+
 function initialPrompt() {
   inquirer
     .prompt({
@@ -33,7 +42,8 @@ function initialPrompt() {
           addDepartment();
           break;
         case 'add a role':
-          addRole();
+          const sql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
+          addRole().then((params) => query(sql, params));
           break;
         case 'add an employee':
           addEmployee();
@@ -81,13 +91,13 @@ function viewEmployees() {
 
 function addDepartment() {
   const sql = `INSERT INTO department (name) VALUES (?)`;
-  const params = inquirer.prompt(
+  const params = inquirer.prompt([
     {
       type: 'input',
       message: "What is the department's name?",
       name: 'name'
     }
-  );
+  ]);
 
   db.query(sql, params, (err, rows) => {
     if (err) {
@@ -98,8 +108,7 @@ function addDepartment() {
 }
 
 function addRole() {
-  const sql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
-  const params = inquirer.prompt(
+  const params = inquirer.prompt([
     {
       type: 'input',
       message: "What is the role's title?",
@@ -114,20 +123,14 @@ function addRole() {
       type: 'input',
       message: "What is the role's department_id?",
       name: 'department'
-    },
-  );
-
-  db.query(sql, params, (err, rows) => {
-    if (err) {
-      console.log('err');
     }
-    console.table(rows);
-  });
+  ]);
+  return (params);
 }
 
 function addEmployee() {
   const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
-  const params = inquirer.prompt(
+  const params = inquirer.prompt([
     {
       type: 'input',
       message: "What is the employee's first name?",
@@ -147,8 +150,8 @@ function addEmployee() {
       type: 'input',
       message: "What is the employee's manager id?",
       name: 'manager'
-    },
-  );
+    }
+  ]);
 
   db.query(sql, params, (err, rows) => {
     if (err) {
@@ -160,7 +163,7 @@ function addEmployee() {
 
 function updateEmployee() {
   const sql = `UPDATE employee SET role_id = ? WHERE id = ?`;
-  const params = inquirer.prompt(
+  const params = inquirer.prompt([
     {
       type: 'input',
       message: 'What is the new role id?',
@@ -171,7 +174,7 @@ function updateEmployee() {
       message: 'Which employee should be altered?',
       name: 'employee'
     }
-  );
+  ]);
 
   db.query(sql, params, (err, rows) => {
     if (err) {
